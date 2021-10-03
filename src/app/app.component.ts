@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'template-frontend-h6-forms-lab';
+  registerActive: boolean = false;
+
+  showRegister(): void{
+    this.registerActive = true;
+  }
+
+  hideRegister(): void{
+    this.registerActive = false;
+  }
 }
