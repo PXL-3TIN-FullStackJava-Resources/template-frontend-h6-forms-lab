@@ -127,17 +127,18 @@ Vervolgens starten we met de declaratie van het formulier in de `register.compon
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 ```
-In de `ngOnInit` methode voorzien we dan de initialisatie van het formulier met de verschillende formcontrols en hun (default) value:
+In de `ngOnInit` methode voorzien we dan de initialisatie van het formulier met de verschillende formcontrols en hun (default) value en typings:
 ```typescript
  ngOnInit(): void {
     this.registerForm = new FormGroup({
-      username: new FormControl(''),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      email: new FormControl(''),
-      age: new FormControl(null),
-      subscription: new FormControl('')
+      username: new FormControl<String>(''),
+      firstName: new FormControl<String>(''),
+      lastName: new FormControl<String>(''),
+      email: new FormControl<String>(''),
+      age: new FormControl<Number|null>(null),
+      subscription: new FormControl<String>('')
     });
+ }
 ```
 De `FormGroup` en `FormControl` properties kunnen we vervolgens binden aan het formulier in de `register.component.html` file. We starten met de `FormGroup`:
 ```html
@@ -189,20 +190,20 @@ Het formulier is nu klaar voor gebruik. Zoals te zien zijn de values rechtstreek
 ### Validatie
 Ook validatie toevoegen doen we in eerste instantie in de component klasse. Pas de `FormGroup` in `register.component.ts` aan als volgt om validatie toe te voegen:
 ```typescript
-ngOnInit(): void {
+  ngOnInit(): void {
     this.registerForm = new FormGroup({
-      username: new FormControl('',[Validators.required,Validators.minLength(3)]),
-      firstName: new FormControl('',[Validators.required]),
-      lastName: new FormControl('',[Validators.required]),
-      email: new FormControl('',[Validators.required,Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]),
-      age: new FormControl(null,[Validators.required]),
-      subscription: new FormControl('',[Validators.required])
+      username: new FormControl<String>('', [Validators.required,Validators.minLength(3)]),
+      firstName: new FormControl<String>('', [Validators.required]),
+      lastName: new FormControl<String>('', [Validators.required]),
+      email: new FormControl<String>('', [Validators.required,Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]),
+      age: new FormControl<Number|null>(null, [Validators.required]),
+      subscription: new FormControl<String>('', [Validators.required])
     });
   }
 
-get registerFormControls() {
-  return this.registerForm.controls;
-}
+  get registerFormControls() {
+    return this.registerForm.controls;
+  }
 ```
 De validators zijn het 2de argument binnen de constructor van de FormControl. Dit is een array, dus het koppelen van meerdere validators (& custom validators) is perfect mogelijk. Daarnaast hebben we ook een getter aangemaakt die de `FormControl` objecten uit de `FormGroup` teruggeeft. Deze getter gebruiken we later voor custom validatie berichten te tonen.
 
