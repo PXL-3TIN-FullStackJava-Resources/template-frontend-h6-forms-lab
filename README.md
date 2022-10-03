@@ -96,8 +96,8 @@ We kunnen deze referentievariabele nu gebruiken om custom error messages te tone
 ```
 Voorzie daarna onderstade code onder het input veld van het password:
 ```html
-<small *ngIf="passwordRef.errors?.required && emailRef.touched">password is required!</small>
-      <small *ngIf="passwordRef.errors?.minlength && emailRef.touched">password must be 8 characters or longer!</small>
+<small *ngIf="passwordRef.errors?.required && passwordRef.touched">password is required!</small>
+      <small *ngIf="passwordRef.errors?.minlength && passwordRef.touched">password must be 8 characters or longer!</small>
 ```
 Tenslotte voorzien we volgende css blok in `login.component.css`: 
 ```css
